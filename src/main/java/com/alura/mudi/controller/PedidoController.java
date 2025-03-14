@@ -32,14 +32,11 @@ public class PedidoController {
     @Autowired
     private PedidoRepository pedidoRepository;
 
-
     Sort sort = Sort.by("dataDaEntrega").descending();
     PageRequest pageRequest = PageRequest.of(0, 10, sort);
 
     @GetMapping("/lista")
     public String listPedidos(Model model, Principal principal){
-
-        
 
         List<Pedido> pedidos = pedidoRepository.findByUser(principal.getName(), pageRequest);
         model.addAttribute("pedidos", pedidos);
