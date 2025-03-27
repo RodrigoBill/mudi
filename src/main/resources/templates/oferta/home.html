@@ -36,7 +36,7 @@
                 </div>
                 <div>
                   <button class="btn btn-success mt-3" v-on:click="enviarOferta(pedido)" v-if="pedido.ofertaEnviada">Oferta Enviada</button>
-                  <button class="btn btn-primary mt-3" v-on:click="enviarOferta(pedido)" v-else>Enviar Oferta</button>
+                  <button class="btn btn-primary mt-3" v-else>Enviar Oferta</button>
                 </div>
               </div>
               <div class="col-12 col-sm-4">
@@ -54,6 +54,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
+      /*Carraga a função antes da página*/
       function onLoad(){
         new Vue({
           el: '#ofertas',

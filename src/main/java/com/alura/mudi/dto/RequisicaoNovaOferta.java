@@ -20,11 +20,11 @@ public class RequisicaoNovaOferta {
 
     private Long pedidoId;
 
-    @Pattern(regexp = "^\\d+(\\.\\d+{2})?$")
+    @Pattern(regexp = "^\\d+(\\.\\d{2})?$", message = "O valor deve estar no formato correto, ex: 123.45")
     @NotNull
     private String valor;
 
-    @Pattern(regexp = "^\\d+{2}/\\d+{2}/\\d+{4}$")
+    @Pattern(regexp = "^\\d{2}/\\d{2}/\\d{4}$", message = "A data deve estar no formato dd/MM/yyyy")
     @NotNull
     private String dataEntrega;
 
@@ -34,7 +34,13 @@ public class RequisicaoNovaOferta {
         Oferta oferta = new Oferta();
 
         oferta.setComentario(this.comentario);
-        oferta.setDataEntrega(LocalDate.parse(this.dataEntrega, formatter));
+
+        if (this.dataEntrega != null && !this.dataEntrega.isEmpty()) {
+            oferta.setDataEntrega(LocalDate.parse(this.dataEntrega, formatter));
+        } else {
+            throw new IllegalArgumentException("Data de entrega não pode ser nula ou vazia");
+        }
+        //oferta.setDataEntrega(LocalDate.parse(this.dataEntrega, formatter));
         oferta.setValor(new BigDecimal(this.valor));
         
         return oferta;

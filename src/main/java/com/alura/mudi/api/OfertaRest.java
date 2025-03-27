@@ -2,6 +2,7 @@ package com.alura.mudi.api;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ public class OfertaRest {
     private PedidoRepository pedidoRepository;
 
     @PostMapping
+    @Transactional
     public Oferta criarOferta(@Valid @RequestBody RequisicaoNovaOferta requisicao){
 
         Optional<Pedido> pedidoBuscado = pedidoRepository.findById(requisicao.getPedidoId());
@@ -35,6 +37,9 @@ public class OfertaRest {
 
         Oferta nova = requisicao.toOferta();
         nova.setPedido(pedido);
+
+        pedido.setDataDaEntrega(nova.getDataEntrega());
+
         pedido.getOfertas().add(nova);
 
         pedidoRepository.save(pedido);
